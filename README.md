@@ -1,14 +1,12 @@
 # Video-Downloader
 
-# My_Video_Downloader_AARV
-My Video Downloader (ver. Amen, Arhan, Riyaan, Vraj)
+## Table 1 - 'url_dump'
 
-**Table 1 - 'url_dump'**
-TABLE NAME
+### TABLE NAME
 
     - "url_dump"
 
-TABLE COLUMNS
+### TABLE COLUMNS
 
     - "id"
         - primary key
@@ -25,13 +23,13 @@ TABLE COLUMNS
     - "download_date"
         - date time when the video was finally downloaded
 
-**Table 2 - 'youtube_links'**
+## Table 2 - 'youtube_links'
 
-TABLE NAME
+### TABLE NAME
 
     - "youtube_links"
 
-TABLE COLUMNS
+### TABLE COLUMNS
 
     - "video_id"
         (Auto incrementing positive number)
@@ -82,6 +80,6 @@ TABLE COLUMNS
 
     - "audio_codec"
         (mp3, aac, m4a,....)
-        
+
     - "audio_sample_rate"
         (44KHz, 48Khz...)
