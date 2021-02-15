@@ -4,7 +4,7 @@ import datetime
 import random
 from tabulate import tabulate
 
-connection = sqlite3.connect("student.sqlite")
+connection = sqlite3.connect("youtube_links.sqlite")
 cur = connection.cursor()
 
 # DB Functions
@@ -12,7 +12,7 @@ cur = connection.cursor()
 def create_table(tableName):
     sql = f"""
         CREATE TABLE IF NOT EXISTS {tableName} (
-        id INT PRIMARY KEY AUTOINCREMENT,
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
         url VARCHAR,
         created_date REAL,
         download_date REAL );
@@ -21,7 +21,7 @@ def create_table(tableName):
     connection.commit()
 
 def add_data(tableName, url):
-    sql = f"INSERT INTO {tableName} (url, download_date) VALUES ({url}, {time.time()})"
+    sql = f"INSERT INTO {tableName} (url, download_date) VALUES ('{url}', {time.time()})"
     cur.execute(sql)
     connection.commit()
 
@@ -54,3 +54,12 @@ def update_table():
     sql = ""
     cur.execute(sql)
     connection.commit()
+
+def file_read(tableName, filepath):
+    f = open(filepath, "r")
+    while True:
+        url = f.readline()
+        if url != "":
+            add_data(tableName, url)
+        else:
+            break
