@@ -21,18 +21,18 @@ def create_table(tableName):
     connection.commit()
 
 def add_data(tableName, url):
-    sql = f"INSERT INTO {tableName} (url, download_date) VALUES ('{url}', {time.time()})"
+    sql = f"INSERT INTO {tableName} (url, created_date, download_date) VALUES ('{url}', {time.time()}, {time.time()})"
     cur.execute(sql)
     connection.commit()
 
-def read_from_table():
-    sql = "SELECT * FROM students"
+def read_from_table(table_name):
+    sql = f"SELECT * FROM {table_name}"
     cur.execute(sql)
     data = cur.fetchall()
     # print(data)
     # for row in data:
     #     print(row)
-    return data
+    return tabulate(data, headers=["ID", "URL", "CREATED", "DOWNLOAD"], tablefmt="fancy_grid")
 
 def get_column_names():
     sql = "SELECT * FROM students"

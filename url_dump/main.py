@@ -1,4 +1,4 @@
-from .db import create_table, add_data, file_read
+from .db import create_table, add_data, file_read, read_from_table
 import argparse
 
 table_name = "url_dump"
@@ -12,21 +12,14 @@ def readURLs():
 
     args = parser.parse_args()
     create_table(table_name)
-    print(args.url)
-    print(args.file)
-
-    if args.url == None and args.file == None: # If the user doesn't pass any arguments on run time.
-        url = input("What URL(s) would you like to save (enter 'multi_select' for multiple)? ")
-        if url == "multi_select":
-            filepath = input("What is the path of the file? ")
-            file_read(table_name, filepath)
-        elif url != "": # Making sure the app doesn't crash if the user doesn't type anything.
-            file_read(table_name, args.file)
     
     if args.url != None:
         add_data(table_name, args.url)
     if args.file != None:
         file_read(table_name, args.file)
+
+    print(f"This is the {table_name} table:")
+    print(read_from_table(table_name))
 
 
 def addURL(url):
