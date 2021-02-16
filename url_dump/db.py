@@ -4,7 +4,7 @@ import datetime
 import random
 from tabulate import tabulate
 
-connection = sqlite3.connect("youtube_links.sqlite")
+connection = sqlite3.connect("video_downloader.sqlite")
 cur = connection.cursor()
 
 # DB Functions
