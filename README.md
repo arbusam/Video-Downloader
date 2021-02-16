@@ -1,6 +1,4 @@
 # My Video Downloader
-> Line 1 <br />
-> Line 2
 
 ## Table: **`url_dump`**
 
