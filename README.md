@@ -1,5 +1,8 @@
 # My Video Downloader
 
+## Usage:
+Install the `tabulate` and `argparse` modules and run `python3 url_dump/main.py -h` for instructions.
+
 ## Table: **`url_dump`**
 
 | Column Name | Column Properties |
