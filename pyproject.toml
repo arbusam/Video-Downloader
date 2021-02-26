@@ -8,6 +8,7 @@ authors = ["Arhan Busam <arhan.busam@gmail.com>"]
 python = "^3.9"
 colorama = "^0.4.4"
 tabulate = "^0.8.7"
+youtube_dl = "^2021.2.22"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^20.8b1", allow-prereleases = true}
@@ -19,3 +20,4 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 url_dump = "url_dump.main:readURLs"
+video_download = "video_download.main:start"
