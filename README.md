@@ -1,7 +1,7 @@
 # My Video Downloader
 
 ## Usage:
-Install the `tabulate` and `argparse` modules and run `python3 url_dump/main.py -h` for instructions.
+Install the `tabulate`, `colorama`, `argparse` and `youtube-dl` modules and run `python3 url_dump/main.py -h` for instructions.
 
 ## Table: **`url_dump`**
 
