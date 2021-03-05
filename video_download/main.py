@@ -15,6 +15,7 @@ file_format_basename = "[%(channel)s]-[%(upload_date)s]-[%(title)s]-[%(id)s]"
 
 links = ["https://www.youtube.com/watch?v=BaW_jenozKc"]
 
-ydl_opts = {}
-with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-    ydl.download(links)
+def start():
+    ydl_opts = {}
+    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+        ydl.download(links)
