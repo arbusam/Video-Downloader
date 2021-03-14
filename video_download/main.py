@@ -14,8 +14,14 @@ def start():
     videos_dir = "[videos]"
     file_format_basename = "[%(channel)s]-[%(upload_date)s]-[%(title)s]-[%(id)s]"
 
+<<<<<<< HEAD
     links = ["https://www.youtube.com/watch?v=d-diB65scQU"]
 
+=======
+links = ["https://www.youtube.com/watch?v=BaW_jenozKc"]
+
+def start():
+>>>>>>> 6c4f3e6c7fdaf43078ca631d623de4696030eca1
     ydl_opts = {}
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download(links)
