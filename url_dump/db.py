@@ -3,6 +3,7 @@ import time
 import datetime
 import random
 from tabulate import tabulate
+from .includes import *
 
 connection = sqlite3.connect("video_downloader.sqlite")
 cur = connection.cursor()
@@ -56,10 +57,25 @@ def update_table():
     connection.commit()
 
 def file_read(tableName, filepath):
-    f = open(filepath, "r")
-    while True:
-        url = f.readline()
-        if url != "":
-            add_data(tableName, url)
-        else:
-            break
+
+    try:
+        f = open(filepath, "r")
+    except FileNotFoundError:
+        print(FILE_NOT_FOUND)
+        return
+    except ModuleNotFoundError:
+        print(FILE_NOT_FOUND)
+        return
+    else:
+        link_list = f.readlines()
+        f.close()
+        print(link_list)
+    return link_list
+    
+
+    # while True:
+    #     url = f.readline()
+    #     if url != "":
+    #         add_data(tableName, url)
+    #     else:
+    #         break

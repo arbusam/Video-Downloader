@@ -18,7 +18,7 @@ def start():
     AUDIO_VIDEO_720_MUX = "bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/best"
     AUDIO_ONLY = "bestaudio"
 
-    download_format = AUDIO_ONLY
+    download_format = AUDIO_VIDEO_720_MUXs
 
 
 links = ["https://www.youtube.com/watch?v=BaW_jenozKc"]
