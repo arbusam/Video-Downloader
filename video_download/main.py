@@ -6,19 +6,22 @@ from os.path import expanduser, dirname, realpath
 # home = expanduser("~")
 # print(home)
 
-def start():
-    filepath = realpath(__file__)
-    sub_dir = dirname(realpath(__file__))
-    parent_dir = dirname(dirname(realpath(__file__)))
+# User Defined
+videos_dir = "[videos]"
+file_format_basename = "[%(uploader)s]-[%(upload_date)s]-[%(title)s]-[%(id)s]"
+file_format_ext = ".%(ext)s"
 
-    videos_dir = "[videos]"
-    file_format_basename = "[%(channel)s]-[%(upload_date)s]-[%(title)s]-[%(id)s]"
+# Download formats
+AUDIO_VIDEO_720_MUX = "bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/best"
+AUDIO_ONLY = "bestaudio"
 
-    # Download formats
-    AUDIO_VIDEO_720_MUX = "bestvideo[height=720][ext=mp4]+bestaudio[ext=m4a]/bestvideo[height=1080][ext=mp4]+bestaudio[ext=m4a]/best"
-    AUDIO_ONLY = "bestaudio"
+download_format = AUDIO_VIDEO_720_MUX
 
-    download_format = AUDIO_VIDEO_720_MUXs
+# home = expanduser("~")
+filepath = realpath(__file__)
+sub_dir = dirname(realpath(__file__))
+parent_dir = dirname(dirname(realpath(__file__)))
+videos_dir = parent_dir + "/" + videos_dir + "/"
 
 
 links = ["https://www.youtube.com/watch?v=BaW_jenozKc"]
