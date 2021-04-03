@@ -67,7 +67,6 @@ def readURLs():
         print(
             f"\n{Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET}"
         )
-        exit() 
 
     print(f"This is the {table_name} table:")
     print(tabulate(read_from_table(table_name), headers=["ID", "URL", "CREATED", "DOWNLOAD"], tablefmt="fancy_grid"))

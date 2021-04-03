@@ -7,7 +7,7 @@ from os.path import expanduser, dirname, realpath
 # print(home)
 
 # User Defined
-videos_dir = "[videos]"
+videos_dir = "videos"
 file_format_basename = "[%(uploader)s]-[%(upload_date)s]-[%(title)s]-[%(id)s]"
 file_format_ext = ".%(ext)s"
 
@@ -31,14 +31,14 @@ def start():
         "outtmpl": videos_dir + file_format_basename + file_format_ext,
         "prefer_ffmpeg": True,
         "retries": 2,
-        "keepvideo": False,
+        "keepvideo": True,
         "ignoreerrors": True,
         "addmetadata": True,
         "noplaylist": True,
         "continuedl": False,  # Try to continue downloads if possible
-        "noprogress": True,  # Do not print the progress bar
-        "writedescription": True,  # Write the video description to a .description file
-        "writeinfojson": True,  # Write the video json data to a .info.json file
+        "noprogress": False,  # Do not print the progress bar
+        "writedescription": False,  # Write the video description to a .description file
+        "writeinfojson": False,  # Write the video json data to a .info.json file
         "writesubtitles": True,
         "writeautomaticsub": True,
         "write-srt": True,

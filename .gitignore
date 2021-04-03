@@ -136,3 +136,6 @@ dmypy.json
 
 # Sqlite
 video_downloader.sqlite
+
+# Videos
+videos/
