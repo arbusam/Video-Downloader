@@ -31,7 +31,9 @@ def readURLs():
         link_list = file_read(table_name, args.file)
 
     try:
-        print(f"Found {Fore.BLUE}{len(link_list)}{Fore.RESET} lines in {Fore.YELLOW}{args.file}{Fore.RESET}")
+        if args.file != None:
+            print(f"Found {Fore.BLUE}{len(link_list)}{Fore.RESET} lines in {Fore.YELLOW}{args.file}{Fore.RESET}")
+
     except TypeError:
         print(f"File {Fore.YELLOW} {str(args.file)} {Fore.WHITE} does {Fore.RED} not {Fore.WHITE} exist")
     
@@ -47,6 +49,7 @@ def readURLs():
 
 
     # If there is atleast one valid link in the valid_url_list,
+    duplicate = False
     if len(valid_url_list):
         for url in valid_url_list:
             data = read_from_table(table_name)
@@ -55,9 +58,14 @@ def readURLs():
                 url_data.append(entry_in_data[1]) # Add the url from each data entry
             if url not in url_data:
                 add_data(table_name, url)
+            else:
+                duplicate = True
+        if duplicate:
+            print("\n" + DUPLICATES + "\n")
+
     else:
         print(
-            f"\n[ {Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET} ]"
+            f"\n{Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET}"
         )
         exit() 
 
