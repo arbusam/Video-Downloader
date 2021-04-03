@@ -65,7 +65,7 @@ def readURLs():
 
     else:
         print(
-            f"\n{Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET}"
+            f"\n{Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET}\n"
         )
 
     print(f"This is the {table_name} table:")
