@@ -1,5 +1,6 @@
 from .includes import *
 from .db import *
+from .file import *
 
 table_name = "url_dump"
 
@@ -16,10 +17,11 @@ def readURLs():
     create_table(table_name)
 
     link_list = []
+    valid_url_list = []
     
     if args.url != None and args.file != None:
         print(URL_FILE_BOTH_PRESENT)
-        quit()
+        exit()
 
     elif args.url != None:
         link_list = args.url
@@ -29,21 +31,38 @@ def readURLs():
         link_list = file_read(table_name, args.file)
 
     try:
-        print("Found " + Fore.BLUE + str(len(link_list)) + Fore.WHITE + " in " + Fore.YELLOW + args.file)
+        print(f"Found {Fore.BLUE}{len(link_list)}{Fore.RESET} lines in {Fore.YELLOW}{args.file}{Fore.RESET}")
     except TypeError:
-        print("File " + Fore.YELLOW + str(args.file) + Fore.WHITE + " does" + Fore.RED + " not " + Fore.WHITE + "exist")
+        print(f"File {Fore.YELLOW} {str(args.file)} {Fore.WHITE} does {Fore.RED} not {Fore.WHITE} exist")
     
     if link_list != None:
-        for url in link_list:
+        for url in link_list: 
             url = url.strip()
             if validate_url(url):
-                add_data(table_name, url)
-                print(Fore.WHITE + url + Fore.GREEN + " valid")
+                # add the url to the valid_url_list[]
+                valid_url_list.append(url)
+                print(f"\t{url}{Fore.GREEN} valid")
             else:
-                print(Fore.WHITE + url + Fore.RED + " invalid")
+                print(f"\t{url}{Fore.RED} invalid")
+
+
+    # If there is atleast one valid link in the valid_url_list,
+    if len(valid_url_list):
+        for url in valid_url_list:
+            data = read_from_table(table_name)
+            url_data = []
+            for entry_in_data in data:
+                url_data.append(entry_in_data[1]) # Add the url from each data entry
+            if url not in url_data:
+                add_data(table_name, url)
+    else:
+        print(
+            f"\n[ {Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET} ]"
+        )
+        exit() 
 
     print(f"This is the {table_name} table:")
-    print(read_from_table(table_name))
+    print(tabulate(read_from_table(table_name), headers=["ID", "URL", "CREATED", "DOWNLOAD"], tablefmt="fancy_grid"))
 
     download_type = {"video, audio"}
 

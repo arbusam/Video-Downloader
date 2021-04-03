@@ -33,10 +33,10 @@ def read_from_table(table_name):
     # print(data)
     # for row in data:
     #     print(row)
-    return tabulate(data, headers=["ID", "URL", "CREATED", "DOWNLOAD"], tablefmt="fancy_grid")
+    return data
 
-def get_column_names():
-    sql = "SELECT * FROM students"
+def get_column_names(tableName):
+    sql = f"SELECT * FROM {tableName}"
     cur.execute(sql)
     columns = cur.description
     return columns
@@ -50,32 +50,3 @@ def drop_table(tableName):
     sql = f"DROP TABLE {tableName}"
     cur.execute(sql)
     connection.commit()
-
-def update_table():
-    sql = ""
-    cur.execute(sql)
-    connection.commit()
-
-def file_read(tableName, filepath):
-
-    try:
-        f = open(filepath, "r")
-    except FileNotFoundError:
-        print(FILE_NOT_FOUND)
-        return
-    except ModuleNotFoundError:
-        print(FILE_NOT_FOUND)
-        return
-    else:
-        link_list = f.readlines()
-        f.close()
-        print(link_list)
-    return link_list
-    
-
-    # while True:
-    #     url = f.readline()
-    #     if url != "":
-    #         add_data(tableName, url)
-    #     else:
-    #         break
