@@ -1,5 +1,5 @@
 from .includes import *
-from .db import *
+from db import *
 from .file import *
 
 table_name = "url_dump"

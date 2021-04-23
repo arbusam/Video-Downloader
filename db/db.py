@@ -3,7 +3,7 @@ import time
 import datetime
 import random
 from tabulate import tabulate
-from .includes import *
+from colorama import init, Fore, Back, Style
 
 connection = sqlite3.connect("video_downloader.sqlite")
 cur = connection.cursor()
@@ -30,9 +30,6 @@ def read_from_table(table_name):
     sql = f"SELECT * FROM {table_name}"
     cur.execute(sql)
     data = cur.fetchall()
-    # print(data)
-    # for row in data:
-    #     print(row)
     return data
 
 def get_column_names(tableName):
