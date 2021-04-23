@@ -1,0 +1,26 @@
+# Here are 4 different cron examples. Use the one that is most appropriate for your use-case.
+# Remember to read the crontab section from README.md before attempting these examples.
+
+
+# Example 1 - Running a Python script (using the Python interpreter)
+# (remember to change the path to to match your directory structure)
+# * * * * * cd /Users/ceogavin/My_Git_Code/[CaptainCodeAU]/My_Video_Downloader_Z; .venv/bin/python cron/example1.py 1>> cron/logs/output.txt 2>> cron/logs/errors.txt
+
+
+# Example 2 - Calling a stand-alone Python script
+# Note: The first line in example2.py is important! It contains the location of the python interpreter.
+# Important: Before adding this line in your crontab, you must first change this file to an 'executable' type.
+# You can do that using the following command (remember to change the path to reflect your directory structure) -
+# chmod +x cron/example2.py
+* * * * * cd /Users/ceogavin/My_Git_Code/[CaptainCodeAU]/My_Video_Downloader_Z; ./cron/example2.py 1>> cron/logs/output.txt 2>> cron/logs/errors.txt
+
+
+# Example 3 - Calling a shell script
+# Note: Before adding this line in your crontab, you must first change this file to an 'executable' type.
+# You can do that using the following command (remember to change the path to reflect your directory structure) -
+# chmod +x cron/example3.sh
+* * * * * cd /Users/ceogavin/My_Git_Code/[CaptainCodeAU]/My_Video_Downloader_Z; ./cron/example3.sh 1>> cron/logs/output.txt 2>> cron/logs/errors.txt
+
+
+# Example 4 - Using the 'poetry run' command
+* * * * * cd /Users/ceogavin/My_Git_Code/[CaptainCodeAU]/My_Video_Downloader_Z; source ./.venv/bin/activate; POETRY_PATH=$(which poetry); $POETRY_PATH run url_dump --help 1>> cron/logs/output.txt 2>> cron/logs/errors.txt
