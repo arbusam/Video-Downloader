@@ -135,7 +135,7 @@ dmypy.json
 .vscode/
 
 # Sqlite
-video_downloader.sqlite
+*.sqlite
 
 # Videos
 videos/
