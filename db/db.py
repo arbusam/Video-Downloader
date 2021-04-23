@@ -4,8 +4,9 @@ import datetime
 import random
 from tabulate import tabulate
 from colorama import init, Fore, Back, Style
+from .config import *
 
-connection = sqlite3.connect("video_downloader.sqlite")
+connection = sqlite3.connect(db_name)
 cur = connection.cursor()
 
 # DB Functions
