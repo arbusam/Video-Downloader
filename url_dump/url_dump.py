@@ -6,12 +6,27 @@ table_name = "url_dump"
 
 def readURLs():
     init(autoreset=True)
-    parser = argparse.ArgumentParser(description="This is the 'url_dump' module!")
+    parser = argparse.ArgumentParser(description="This application stores YouTube URL(s) into the database.", formatter_class=argparse.RawTextHelpFormatter)
 
     # Here is an example showing how to use arguments in your code
     parser.add_argument("-u", "--url", type=str, help="Enter a URL to be added")
     parser.add_argument("-f", "--file", type=str, help="Enter a file containing URLs to be added (one URL per line)")
-    parser.add_argument("-t", "--type", type=str, help="Enter the download type to download with. Options: 'video', 'audio', 'desc'. (Conbine multiple options with a '+' ) Default value: 'video+audio'")
+    parser.add_argument("-t", "--type", type=str, help=f"""Enter the download type
+Options:
+    {Fore.GREEN}video{Fore.RESET}         video file (default resolution of up to 720p)
+    {Fore.GREEN}video480p{Fore.RESET}     video file (up to a resolution of 480p)
+    {Fore.GREEN}video720p{Fore.RESET}     video file (up to a resolution of 720p)
+    {Fore.GREEN}video1080p{Fore.RESET}    video file (up to a resolution of 1080p)
+    {Fore.GREEN}audio{Fore.RESET}         audio file (mp3 format)
+    {Fore.GREEN}thumb{Fore.RESET}         thumbnail image
+    {Fore.GREEN}desc{Fore.RESET}          video description file
+    {Fore.GREEN}sub{Fore.RESET}           subtitles file
+    {Fore.GREEN}json{Fore.RESET}          JSON metadata file (from YouTube)
+    {Fore.GREEN}all{Fore.RESET}           all of the above
+    Combine multiple options with a {Fore.YELLOW}+{Fore.RESET}
+    Default value: {Fore.GREEN}video+thumb+audio{Fore.RESET}
+    Note: Do not add spaces around the {Fore.YELLOW}+{Fore.RESET}
+""")
 
     args = parser.parse_args()
     create_table(table_name)
@@ -71,11 +86,30 @@ def readURLs():
     print(f"This is the {table_name} table:")
     print(tabulate(read_from_table(table_name), headers=["ID", "URL", "CREATED", "DOWNLOAD"], tablefmt="fancy_grid"))
 
-    download_type = {"video, audio"}
+    download_types = ["video, audio", "desc"]
 
     if args.type != None:
-        download_type = args.type.split("+")
-    print(download_type)
+        download_types = []
+        video_passed = False
+        for download_type in args.type.split("+"):
+            if download_type == "all":
+                download_types = ["video", "audio", "thumb", "desc", "sub", "json"]
+                break
+            if "video" in download_type:
+                if video_passed != True:
+                    video_passed = True
+                else:
+                    print(ONLY_ONE_VIDEO_ERROR)
+                    download_types = ["video", "audio", "thumb", "desc", "sub", "json"]
+                    break
+            if download_type == "video" or download_type == "video480p" or download_type == "video720p" or download_type == "video1080p" or download_type == "audio" or download_type == "thumb" or download_type == "desc" or download_type == "sub" or download_type == "json":
+                download_types.append(download_type)
+            else:
+                print(INVALID_TYPE_ERROR)
+                download_types = ["video", "audio", "thumb", "desc", "sub", "json"]
+                break
+                
+    print(download_types)
     # TODO: Call video_download here
 
 
