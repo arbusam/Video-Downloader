@@ -17,11 +17,6 @@
 
 <br />
 
-## `url_dump` example in Excel
-![Image of Excel Example](/docs/youtube_downloader_example.png)
-
-<br />
-
 ## Table: **`youtube_links`**
 
 | Column Name | Column Properties |
