@@ -62,28 +62,11 @@ Options:
             else:
                 print(f"\t{url}{Fore.RED} invalid")
 
-    download_types = ["video, audio", "desc"]
+    download_types = default_download_type
 
     if args.type != None:
-        download_types = []
-        video_passed = False
-        for download_type in args.type.split("+"):
-            if download_type == "all":
-                download_types = ["video", "audio", "thumb", "desc", "sub", "json"]
-                break
-            if "video" in download_type:
-                if video_passed != True:
-                    video_passed = True
-                else:
-                    print(ONLY_ONE_VIDEO_ERROR)
-                    download_types = ["video", "audio", "thumb", "desc", "sub", "json"]
-                    break
-            if download_type == "video" or download_type == "video480p" or download_type == "video720p" or download_type == "video1080p" or download_type == "audio" or download_type == "thumb" or download_type == "desc" or download_type == "sub" or download_type == "json":
-                download_types.append(download_type)
-            else:
-                print(INVALID_TYPE_ERROR)
-                download_types = ["video", "audio", "thumb", "desc", "sub", "json"]
-                break
+        download_types = validate_download_types(args)
+        
 
     # If there is at least one valid link in the valid_url_list,
     duplicate = False
