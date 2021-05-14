@@ -41,18 +41,10 @@ def display_arguments():
 
 def validate_download_types(args):
     download_types = []
-    video_passed = False
     for download_type in args.type.split("+"):
         if download_type == "all":
             download_types = file_types
             break
-        if "video" in download_type:
-            if video_passed != True:
-                video_passed = True
-            else:
-                print(ONLY_ONE_VIDEO_ERROR)
-                download_types = default_download_type.split("+")
-                break
         if download_type in file_types:
             download_types.append(download_type)
         else:
