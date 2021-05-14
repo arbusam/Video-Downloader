@@ -1,5 +1,5 @@
 from .includes import *
-from db import *
+from common import *
 from .file import *
 
 table_name = "url_dump"
@@ -62,30 +62,6 @@ Options:
             else:
                 print(f"\t{url}{Fore.RED} invalid")
 
-
-    # If there is atleast one valid link in the valid_url_list,
-    duplicate = False
-    if len(valid_url_list):
-        for url in valid_url_list:
-            data = read_from_table(table_name)
-            url_data = []
-            for entry_in_data in data:
-                url_data.append(entry_in_data[1]) # Add the url from each data entry
-            if url not in url_data:
-                add_data(table_name, url)
-            else:
-                duplicate = True
-        if duplicate:
-            print("\n" + DUPLICATES + "\n")
-
-    else:
-        print(
-            f"\n{Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET}\n"
-        )
-
-    print(f"This is the {table_name} table:")
-    print(tabulate(read_from_table(table_name), headers=["ID", "URL", "CREATED", "DOWNLOAD"], tablefmt="fancy_grid"))
-
     download_types = ["video, audio", "desc"]
 
     if args.type != None:
@@ -108,8 +84,35 @@ Options:
                 print(INVALID_TYPE_ERROR)
                 download_types = ["video", "audio", "thumb", "desc", "sub", "json"]
                 break
+
+    # If there is at least one valid link in the valid_url_list,
+    duplicate = False
+    
+    if len(valid_url_list):
+        for url in valid_url_list:
+            data = read_from_table(table_name)
+            url_data = []
+            for entry_in_data in data:
+                url_data.append(entry_in_data[1]) # Add the url from each data entry
+            if url not in url_data:
+                if args.type != None:
+                    add_data(table_name, url, args.type)
+                else:
+                    add_data(table_name, url, "video+audio+desc")
                 
-    print(download_types)
+            else:
+                duplicate = True
+        if duplicate:
+            print("\n" + DUPLICATES + "\n")
+
+    else:
+        print(
+            f"\n{Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET}\n"
+        )
+
+    print(f"This is the {table_name} table:")
+    print(tabulate(read_from_table(table_name), headers=["ID", "URL", "CREATED", "DOWNLOAD"], tablefmt="fancy_grid"))
+                
     # TODO: Call video_download here
 
 

@@ -16,14 +16,15 @@ def create_table(tableName):
         CREATE TABLE IF NOT EXISTS {tableName} (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         url VARCHAR,
+        type TEXT,
         created_date REAL,
         download_date REAL );
     """
     cur.execute(sql)
     connection.commit()
 
-def add_data(tableName, url):
-    sql = f"INSERT INTO {tableName} (url, created_date, download_date) VALUES ('{url}', {time.time()}, {time.time()})"
+def add_data(tableName, url, types):
+    sql = f"INSERT INTO {tableName} (url, created_date, download_date) VALUES ('{url}', '{types}' {time.time()}, {time.time()})"
     cur.execute(sql)
     connection.commit()
 
