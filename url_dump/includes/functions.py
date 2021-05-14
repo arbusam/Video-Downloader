@@ -51,12 +51,11 @@ def validate_download_types(args):
                 video_passed = True
             else:
                 print(ONLY_ONE_VIDEO_ERROR)
-                download_types = default_download_type
+                download_types = default_download_type.split("+")
                 break
         if download_type in file_types:
             download_types.append(download_type)
         else:
             print(INVALID_TYPE_ERROR)
-            download_types = default_download_type
-            break
+            download_types = default_download_type.split("+")
     return download_types

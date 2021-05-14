@@ -1,7 +1,7 @@
 db_name = "./common/db.sqlite"
 
 # Default download 'type' for url_dump
-default_download_type = ["video", "thumb", "desc"]
+default_download_type = "video+thumb+desc"
 
 file_types = {
     "video": "\tvideo file (max. default resolution of 720p)",

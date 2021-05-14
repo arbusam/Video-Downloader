@@ -62,7 +62,7 @@ Options:
             else:
                 print(f"\t{url}{Fore.RED} invalid")
 
-    download_types = default_download_type
+    download_types = default_download_type.split("+")
 
     if args.type != None:
         download_types = validate_download_types(args)
@@ -81,7 +81,7 @@ Options:
                 if args.type != None:
                     add_data(table_name, url, args.type)
                 else:
-                    add_data(table_name, url, "video+audio+desc")
+                    add_data(table_name, url, default_download_type)
                 
             else:
                 duplicate = True
