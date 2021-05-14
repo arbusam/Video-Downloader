@@ -58,4 +58,5 @@ def validate_download_types(args):
         else:
             print(INVALID_TYPE_ERROR)
             download_types = default_download_type.split("+")
+            break
     return download_types
