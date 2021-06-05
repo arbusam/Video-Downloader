@@ -1,4 +1,5 @@
 db_name = "./common/db.sqlite"
+db_table_url_dump = "url_dump"
 
 # Default download 'type' for url_dump
 default_download_type = "video+thumb+desc"

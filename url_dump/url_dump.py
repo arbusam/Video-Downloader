@@ -1,3 +1,4 @@
+from os import read
 from .includes import *
 from common import *
 from .file import *
@@ -27,6 +28,29 @@ Options:
     Default value: {Fore.GREEN}video+thumb+audio{Fore.RESET}
     Note: Do not add spaces around the {Fore.YELLOW}+{Fore.RESET}
 """)
+    # 'list' argument
+    parser.add_argument(
+        "-l",
+        "--list",
+        action="store_true",
+        help="list all URLs that are pending download",
+    )
+
+    # 'num' argument
+    parser.add_argument(
+        "-n",
+        "--num",
+        type=int,
+        default=0,
+        help="list the last 'num' URLs pending download (in reverse order)",
+    )
+
+    parser.add_argument(
+        "-o",
+        "--output",
+        type=str,
+        help="list the last 'num' URLs pending download (in reverse order)",
+    )
 
     args = parser.parse_args()
     create_table(table_name)
@@ -44,7 +68,7 @@ Options:
     elif args.file != None:
 
         link_list = file_read(table_name, args.file)
-
+        
     try:
         if args.file != None:
             print(f"Found {Fore.BLUE}{len(link_list)}{Fore.RESET} lines in {Fore.YELLOW}{args.file}{Fore.RESET}")
@@ -62,44 +86,42 @@ Options:
             else:
                 print(f"\t{url}{Fore.RED} invalid")
 
+    string_download_types = default_download_type
     download_types = default_download_type.split("+")
 
     if args.type != None:
-        download_types = validate_download_types(args)
+        validated_types = validate_download_types(args)
+        download_types = validated_types[0]
+        if validated_types[1]:
+            string_download_types = args.type
+        else:
+            string_download_types = default_download_type
         
 
     # If there is at least one valid link in the valid_url_list,
     duplicate = False
     
     if len(valid_url_list):
-        for url in valid_url_list:
-            data = read_from_table(table_name)
-            url_data = []
-            for entry_in_data in data:
-                url_data.append(entry_in_data[1]) # Add the url from each data entry
-            if url not in url_data:
-                if args.type != None:
-                    add_data(table_name, url, args.type)
-                else:
-                    add_data(table_name, url, default_download_type)
-                
-            else:
-                duplicate = True
-        if duplicate:
-            print("\n" + DUPLICATES + "\n")
-
+        add_data(db_table_url_dump, "url, type", [valid_url_list, string_download_types])
     else:
         print(
             f"\n{Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET}\n"
         )
 
-    print(f"This is the {table_name} table:")
-    print(tabulate(read_from_table(table_name), headers=["ID", "URL", "CREATED", "DOWNLOAD"], tablefmt="fancy_grid"))
+    if args.output != None and args.output != "":
+        wb = Workbook()
+
+        ws = wb.active
+        ws.title = "URL Dump"
+        
+        ws = populate_headings(ws, headings)
+        ws = populate_data(ws, read_from_table(db_table_url_dump, "ORDER BY ID ASC"))
+
+        wb.save(filename=args.output)
                 
     # TODO: Call video_download here
 
 
 def addURL(url):
-
     create_table(table_name)
     

@@ -12,6 +12,7 @@ youtube_dl = "^2021.2.22"
 requests = "^2.25.1"
 pylint = "^2.7.2"
 black = "^20.8b1"
+openpyxl = "^3.0.7"
 
 [tool.poetry.dev-dependencies]
 black = {version = "^20.8b1", allow-prereleases = true}
