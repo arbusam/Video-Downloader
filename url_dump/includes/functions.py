@@ -128,6 +128,8 @@ def populate_headings(ws, values):
         Worksheet: Worksheet object with headings populated
     """
 
+    print(Fore.YELLOW + "Populating Excel headings...", end="\r")
+
     for i in range(len(values)):
         ws[get_column_letter(i+1) + "1"].value = values[i]["name"]
         ws[get_column_letter(i+1) + "1"].alignment = Alignment(
@@ -145,6 +147,7 @@ def populate_headings(ws, values):
         )
         
         ws.column_dimensions[get_column_letter(i+1)].width = values[i]["column_size"]
+    print(Fore.GREEN + "Excel headings populated")
     return ws
 
 def populate_data(ws, data):
