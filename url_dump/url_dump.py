@@ -14,11 +14,10 @@ def readURLs():
     parser.add_argument("-f", "--file", type=str, help="Enter a file containing URLs to be added (one URL per line)")
     parser.add_argument("-t", "--type", type=str, help=f"""Enter the download type
 Options:
-    {Fore.GREEN}video{Fore.RESET}         video file (default resolution of up to 720p)
-    {Fore.GREEN}video480p{Fore.RESET}     video file (up to a resolution of 480p)
-    {Fore.GREEN}video720p{Fore.RESET}     video file (up to a resolution of 720p)
-    {Fore.GREEN}video1080p{Fore.RESET}    video file (up to a resolution of 1080p)
-    {Fore.GREEN}audio{Fore.RESET}         audio file (mp3 format)
+    {Fore.GREEN}video{Fore.RESET}         video file (using the best available quality)
+    {Fore.GREEN}worstvideo{Fore.RESET}    video file (using the worst available quality)
+    {Fore.GREEN}audio{Fore.RESET}         audio file (using the best available quality)
+    {Fore.GREEN}audio{Fore.RESET}         audio file (using the worst available quality)
     {Fore.GREEN}thumb{Fore.RESET}         thumbnail image
     {Fore.GREEN}desc{Fore.RESET}          video description file
     {Fore.GREEN}sub{Fore.RESET}           subtitles file
@@ -63,7 +62,7 @@ Options:
         exit()
 
     elif args.url != None:
-        link_list = args.url
+        link_list.append(args.url)
         
     elif args.file != None:
 
@@ -92,17 +91,16 @@ Options:
     if args.type != None:
         validated_types = validate_download_types(args)
         download_types = validated_types[0]
-        if validated_types[1]:
-            string_download_types = args.type
+        if validated_types[1] != True:
+            string_download_types = download_types[0]
         else:
             string_download_types = default_download_type
         
 
-    # If there is at least one valid link in the valid_url_list,
-    duplicate = False
+    # If there is at least one valid link in the valid_url_list,\
     
     if len(valid_url_list):
-        add_data(db_table_url_dump, "url, type", [valid_url_list, string_download_types])
+        add_data(db_table_url_dump, "url, type, created_date", [valid_url_list, string_download_types])
     else:
         print(
             f"\n{Fore.RED}{len(valid_url_list)} {Fore.RESET}valid links. {Fore.RED}Nothing to process.{Fore.RESET}\n"
@@ -118,10 +116,6 @@ Options:
         ws = populate_data(ws, read_from_table(db_table_url_dump, "ORDER BY ID ASC"))
 
         wb.save(filename=args.output)
-                
-    # TODO: Call video_download here
-
 
 def addURL(url):
     create_table(table_name)
-    

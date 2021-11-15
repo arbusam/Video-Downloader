@@ -53,6 +53,11 @@ def validate_download_types(args):
         if download_type == "all":
             download_types = file_types
             break
+        if "video" not in download_type and "audio" not in download_type:
+            invalid = True
+            print(Fore.RED + "No video or audio found in the type. Using default types." + Fore.RESET)
+            break
+            
         if download_type in file_types:
             download_types.append(download_type)
         else:
